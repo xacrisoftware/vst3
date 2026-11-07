@@ -1,0 +1,23 @@
+name: Build VST3
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ilammy/msvc-dev-cmd@v1
+      - uses: lukka/get-cmake@latest
+      - name: Configure
+        run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build build --config Release --target LoFiCrusher_VST3
+      - name: Package
+        shell: pwsh
+        run: Compress-Archive -Path 'build\LoFiCrusher_artefacts\Release\VST3\LoFi Crusher.vst3' -DestinationPath LoFiCrusher-VST3.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LoFiCrusher-VST3
+          path: LoFiCrusher-VST3.zip
