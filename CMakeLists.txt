@@ -26,5 +26,7 @@ target_sources(LoFiCrusher PRIVATE
   Source/PluginEditor.cpp
   Source/PluginEditor.h)
 
+juce_generate_juce_header(LoFiCrusher)
+
 target_compile_definitions(LoFiCrusher PRIVATE JUCE_WEB_BROWSER=0 JUCE_USE_CURL=0)
 target_link_libraries(LoFiCrusher PRIVATE juce::juce_audio_utils)
